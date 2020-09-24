@@ -1,0 +1,540 @@
+{% include 'header.html' %}
+
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Result</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Result analyze</a></li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+
+{#          WIDGET USER#}
+          <div class="row">
+          <div class="col-md-4" style="margin-left: 32.5%;">
+            <!-- Widget: user widget style 1 -->
+            <div class="card card-widget widget-user">
+              <!-- Add the bg color to the header using any of the bg-* classes -->
+              <div class="widget-user-header bg-info">
+                <h3 class="widget-user-username" style="margin-top: 2%;">{{ results.username }}</h3>
+              </div>
+              <div class="widget-user-image">
+                <img class="img-circle elevation-2" src="{{ url_for('static', filename='dist/img/user-3.png')}}" alt="User Avatar">
+              </div>
+              <div class="card-footer">
+                <div class="row">
+                  <!-- /.col -->
+                  <div class="col-sm-12">
+                    <div class="description-block" style="position: center;">
+                      <h5 class="description-header" style="text-align: center;">{{ results.result.NA + results.result.low + results.result.moderate + results.result.high }}</h5>
+                      <span class="description-text" style="text-align: center;">TOTAL TWEETS</span>
+                    </div>
+                    <!-- /.description-block -->
+                      {% if results.result.high != 0 %}
+                        <div style="text-align : center">
+                          <p class="alert alert-danger" style="text-align: center;"><strong>Vulnerable</strong></p>
+                        {% endif %}
+                  </div>
+                <!-- /.row -->
+              </div>
+            </div>
+            <!-- /.widget-user -->
+          </div>
+
+          </div>
+          <!-- /.col -->
+
+        </div>
+        <!-- /.row -->
+
+
+
+{#          WIDGET RESULT #}
+          <section class="content" style="margin-top:3%">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>{{ results.result.NA }}</h3>
+
+                <p>The number of tweets in the category</p><strong>NA (NOT DEPRESS)</strong>
+              </div>
+                <a href="#natable" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>{{ results.result.low }}</h3>
+
+                  <p>The number of tweets in the category</p><strong>LOW DEPRESS</strong>
+              </div>
+                <a href="#lowtable" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>{{ results.result.moderate }}</h3>
+
+                <p>The number of tweets in the category</p><strong>MODERATE DEPRESS</strong>
+              </div>
+                <a href="#moderatetable" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>{{ results.result.high }}</h3>
+
+                <p>The number of tweets in the category</p><strong>HIGH DEPRESS</strong>
+              </div>
+                <a href="#hightable" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+{#          tables#}
+{#            <div class="row" style="margin-top: 3%; width: 3000px;">#}
+{#          <div class="col-9">#}
+{#            <div class="card" id="na">#}
+{#              <div class="card-header">#}
+{#                <h3 class="card-title">Detail analyze tweets category NA depress</h3>#}
+{##}
+{#                <div class="card-tools">#}
+{#                </div>#}
+{#              </div>#}
+{#              <!-- /.card-header -->#}
+{#              <div class="card-body table-responsive p-0" style="height: 300px;">#}
+{#                <table class="table table-head-fixed text-nowrap" style="font-size: 11.5px;">#}
+{#                  <thead>#}
+{#                    <tr>#}
+{#                      <th>No.</th>#}
+{#                      <th>Tweets</th>#}
+{#                      <th>Self score</th>#}
+{#                      <th>Negative sentiment score</th>#}
+{#                      <th>Negative emotion score</th>#}
+{#                        <th>Absolutist score</th>#}
+{#                        <th>Lexicon depression score</th>#}
+{#                        <th>Label</th>#}
+{#                    </tr>#}
+{#                  </thead>#}
+{#                  <tbody>#}
+{#                  {% for rs in results.tweets %}#}
+{#                      {% if rs.feature.label == 'NA' %}#}
+{#                    <tr>#}
+{#                      <td>{{ rs.sentence.text }}</td>#}
+{#                      <td>{{ rs.feature.selfScore }}</td>#}
+{#                        <td>{{ rs.feature.negSentiScore }}</td>#}
+{#                        <td>{{ rs.feature.negEmo }}</td>#}
+{#                        <td>{{ rs.feature.absolutistScore }}</td>#}
+{#                        <td>{{ rs.feature.MDscore }}</td>#}
+{#                        <td>{{ rs.feature.label}}</td>#}
+{#                    </tr>#}
+{#                    <tr>#}
+{#                      {% endif %}#}
+{#                  {% endfor %}#}
+{#                  </tbody>#}
+{#                </table>#}
+{#              </div>#}
+{#              <!-- /.card-body -->#}
+{#            </div>#}
+{#            <!-- /.card -->#}
+{#          </div>#}
+{#        </div>#}
+{#TABLE LOW #}
+{#        <div class="row" style="margin-top: 3%; width: 3000px;">#}
+{#          <div class="col-9">#}
+{#            <div class="card">#}
+{#              <div class="card-header">#}
+{#                <h3 class="card-title">Detail analyze tweets category LOW depress</h3>#}
+{##}
+{#                <div class="card-tools">#}
+{#                </div>#}
+{#              </div>#}
+{#              <!-- /.card-header -->#}
+{#              <div class="card-body table-responsive p-0" style="height: 300px;">#}
+{#                <table class="table table-head-fixed text-nowrap" style="font-size: 11.5px;">#}
+{#                  <thead>#}
+{#                    <tr>#}
+{#                      <th>No.</th>#}
+{#                      <th>Tweets</th>#}
+{#                      <th>Self score</th>#}
+{#                      <th>Negative sentiment score</th>#}
+{#                      <th>Negative emotion score</th>#}
+{#                        <th>Absolutist score</th>#}
+{#                        <th>Lexicon depression score</th>#}
+{#                        <th>Label</th>#}
+{#                    </tr>#}
+{#                  </thead>#}
+{#                  <tbody>#}
+{#                  {% for rs in results.tweets %}#}
+{#                      {% if rs.feature.label == 'low' %}#}
+{#                    <tr>#}
+{#                      <td>{{ rs.sentence.text }}</td>#}
+{#                      <td>{{ rs.feature.selfScore }}</td>#}
+{#                        <td>{{ rs.feature.negSentiScore }}</td>#}
+{#                        <td>{{ rs.feature.negEmo }}</td>#}
+{#                        <td>{{ rs.feature.absolutistScore }}</td>#}
+{#                        <td>{{ rs.feature.MDscore }}</td>#}
+{#                        <td>{{ rs.feature.label}}</td>#}
+{#                    </tr>#}
+{#                    <tr>#}
+{#                      {% endif %}#}
+{#                  {% endfor %}#}
+{#                  </tbody>#}
+{#                </table>#}
+{#              </div>#}
+{#              <!-- /.card-body -->#}
+{#            </div>#}
+{#            <!-- /.card -->#}
+{#          </div>#}
+{#        </div>#}
+{#TABLE MODERATE#}
+{#        <div class="row" style="margin-top: 3%; width: 3000px;">#}
+{#          <div class="col-9">#}
+{#            <div class="card">#}
+{#              <div class="card-header">#}
+{#                <h3 class="card-title">Detail analyze tweets category MODERATE depress</h3>#}
+{##}
+{#                <div class="card-tools">#}
+{#                </div>#}
+{#              </div>#}
+{#              <!-- /.card-header -->#}
+{#              <div class="card-body table-responsive p-0" style="height: 300px;">#}
+{#                <table class="table table-head-fixed text-nowrap" style="font-size: 11.5px;">#}
+{#                  <thead>#}
+{#                    <tr>#}
+{#                      <th>No.</th>#}
+{#                      <th>Tweets</th>#}
+{#                      <th>Self score</th>#}
+{#                      <th>Negative sentiment score</th>#}
+{#                      <th>Negative emotion score</th>#}
+{#                        <th>Absolutist score</th>#}
+{#                        <th>Lexicon depression score</th>#}
+{#                        <th>Label</th>#}
+{#                    </tr>#}
+{#                  </thead>#}
+{#                  <tbody>#}
+{#                  {% for rs in results.tweets %}#}
+{#                      {% if rs.feature.label == 'moderate' %}#}
+{#                    <tr>#}
+{#                      <td>{{ rs.sentence.text }}</td>#}
+{#                      <td>{{ rs.feature.selfScore }}</td>#}
+{#                        <td>{{ rs.feature.negSentiScore }}</td>#}
+{#                        <td>{{ rs.feature.negEmo }}</td>#}
+{#                        <td>{{ rs.feature.absolutistScore }}</td>#}
+{#                        <td>{{ rs.feature.MDscore }}</td>#}
+{#                        <td>{{ rs.feature.label}}</td>#}
+{#                    </tr>#}
+{#                      {% endif %}#}
+{#                  {% endfor %}#}
+{#                  </tbody>#}
+{#                </table>#}
+{#              </div>#}
+{#              <!-- /.card-body -->#}
+{#            </div>#}
+{#            <!-- /.card -->#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{##}
+{#        TABLE HIGH#}
+{#        <div class="row" style="margin-top: 3%; width: 3000px;">#}
+{#          <div class="col-9">#}
+{#            <div class="card">#}
+{#              <div class="card-header">#}
+{#                <h3 class="card-title">Detail analyze tweets category HIGH depress</h3>#}
+{##}
+{#                <div class="card-tools">#}
+{#                </div>#}
+{#              </div>#}
+{#              <!-- /.card-header -->#}
+{#              <div class="card-body table-responsive p-0" style="height: 300px;">#}
+{#                <table class="table table-head-fixed text-nowrap" style="font-size: 11.5px;">#}
+{#                  <thead>#}
+{#                    <tr>#}
+{#                      <th>No.</th>#}
+{#                      <th>Tweets</th>#}
+{#                      <th>Self score</th>#}
+{#                      <th>Negative sentiment score</th>#}
+{#                      <th>Negative emotion score</th>#}
+{#                        <th>Absolutist score</th>#}
+{#                        <th>Lexicon depression score</th>#}
+{#                        <th>Label</th>#}
+{#                    </tr>#}
+{#                  </thead>#}
+{#                  <tbody>#}
+{#                  {% for rs in results.tweets %}#}
+{#                      {% if rs.feature.label == 'high' %}#}
+{#                    <tr>#}
+{#                      <td>{{ rs.sentence.text }}</td>#}
+{#                      <td>{{ rs.feature.selfScore }}</td>#}
+{#                        <td>{{ rs.feature.negSentiScore }}</td>#}
+{#                        <td>{{ rs.feature.negEmo }}</td>#}
+{#                        <td>{{ rs.feature.absolutistScore }}</td>#}
+{#                        <td>{{ rs.feature.MDscore }}</td>#}
+{#                        <td>{{ rs.feature.label}}</td>#}
+{#                    </tr>#}
+{#                    <tr>#}
+{#                      {% endif %}#}
+{#                  {% endfor %}#}
+{#                  </tbody>#}
+{#                </table>#}
+{#              </div>#}
+{#              <!-- /.card-body -->#}
+{#            </div>#}
+{#            <!-- /.card -->#}
+{#          </div>#}
+{#        </div>#}
+{#BATAS TABLES#}
+
+{#        TABLE BARU#}
+
+        <div class="row" id="natable" style="margin-top: 3%;">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><strong>Detail analyze tweets category NA depress</strong></h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body" style="text-align: center; vertical-align: middle">
+              <table id="tabel2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th style="text-align: center; vertical-align: middle">Tweets</th>
+                      <th style="text-align: center; vertical-align: middle">Self score</th>
+                      <th style="text-align: center; vertical-align: middle">Negative sentiment score</th>
+                      <th style="text-align: center; vertical-align: middle">Negative emotion score</th>
+                        <th style="text-align: center; vertical-align: middle">Absolutist score</th>
+                        <th style="text-align: center; vertical-align: middle">Lexicon depression score</th>
+                        <th style="text-align: center; vertical-align: middle">Label</th>
+                </tr>
+                </thead>
+                <tbody>
+                 {% for rs in results.tweets %}
+                      {% if rs.feature.label == 'NA' %}
+                    <tr>
+                      <td style="text-align: center; vertical-align: middle">{{ rs.sentence.text }}</td>
+                      <td style="text-align: center; vertical-align: middle">{{ rs.feature.selfScore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.negSentiScore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.negEmo }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.absolutistScore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.MDscore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.label}}</td>
+                    </tr>
+                    <tr>
+                      {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        </div>
+{#        TABLE LOW#}
+        <div class="row" id="lowtable" style="margin-top: 3%;">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><strong>Detail analyze tweets category LOW depress</strong></h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body" style="text-align: center; vertical-align: middle">
+              <table id="tabel2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th style="text-align: center; vertical-align: middle">Tweets</th>
+                      <th style="text-align: center; vertical-align: middle">Self score</th>
+                      <th style="text-align: center; vertical-align: middle">Negative sentiment score</th>
+                      <th style="text-align: center; vertical-align: middle">Negative emotion score</th>
+                        <th style="text-align: center; vertical-align: middle">Absolutist score</th>
+                        <th style="text-align: center; vertical-align: middle">Lexicon depression score</th>
+                        <th style="text-align: center; vertical-align: middle">Label</th>
+                </tr>
+                </thead>
+                <tbody>
+                 {% for rs in results.tweets %}
+                      {% if rs.feature.label == 'low' %}
+                    <tr>
+                      <td style="text-align: center; vertical-align: middle">{{ rs.sentence.text }}</td>
+                      <td style="text-align: center; vertical-align: middle">{{ rs.feature.selfScore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.negSentiScore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.negEmo }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.absolutistScore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.MDscore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.label}}</td>
+                    </tr>
+                    <tr>
+                      {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        </div>
+{#        TABLE MODERATE#}
+        <div class="row" id="moderatetable" style="margin-top: 3%;">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><strong>Detail analyze tweets category MODERATE depress</strong></h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body" style="text-align: center; vertical-align: middle">
+              <table id="tabel2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th style="text-align: center; vertical-align: middle">Tweets</th>
+                      <th style="text-align: center; vertical-align: middle">Self score</th>
+                      <th style="text-align: center; vertical-align: middle">Negative sentiment score</th>
+                      <th style="text-align: center; vertical-align: middle">Negative emotion score</th>
+                        <th style="text-align: center; vertical-align: middle">Absolutist score</th>
+                        <th style="text-align: center; vertical-align: middle">Lexicon depression score</th>
+                        <th style="text-align: center; vertical-align: middle">Label</th>
+                </tr>
+                </thead>
+                <tbody>
+                 {% for rs in results.tweets %}
+                      {% if rs.feature.label == 'moderate' %}
+                    <tr>
+                      <td style="text-align: center; vertical-align: middle">{{ rs.sentence.text }}</td>
+                      <td style="text-align: center; vertical-align: middle">{{ rs.feature.selfScore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.negSentiScore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.negEmo }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.absolutistScore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.MDscore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.label}}</td>
+                    </tr>
+                    <tr>
+                          {% else %}
+                      {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        </div>
+{#        TABLE HIGH#}
+        <div class="row" id="hightable" style="margin-top: 3%;">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><strong>Detail analyze tweets category HIGH depress</strong></h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body" style="text-align: center; vertical-align: middle">
+              <table id="tabel2" class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                  <th style="text-align: center; vertical-align: middle">Tweets</th>
+                      <th style="text-align: center; vertical-align: middle">Self score</th>
+                      <th style="text-align: center; vertical-align: middle">Negative sentiment score</th>
+                      <th style="text-align: center; vertical-align: middle">Negative emotion score</th>
+                        <th style="text-align: center; vertical-align: middle">Absolutist score</th>
+                        <th style="text-align: center; vertical-align: middle">Lexicon depression score</th>
+                        <th style="text-align: center; vertical-align: middle">Label</th>
+                </tr>
+                </thead>
+                <tbody>
+                 {% for rs in results.tweets %}
+                      {% if rs.feature.label == 'high' %}
+                    <tr>
+                      <td style="text-align: center; vertical-align: middle">{{ rs.sentence.text }}</td>
+                      <td style="text-align: center; vertical-align: middle">{{ rs.feature.selfScore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.negSentiScore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.negEmo }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.absolutistScore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.MDscore }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ rs.feature.label}}</td>
+                    </tr>
+                    <tr>
+                      {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        </div>
+{#        batas TABLE BARU#}
+        </div>
+      </div>
+    </section>
+{#BATAS WIDGET RESULT#}
+      </div><!-- /.container-fluid -->
+    </div>
+  </div>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+        <!-- /.row (main row) -->
+        </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+#scroll-btn{
+background-color: #3c8dbc;
+border: medium none;
+border-radius: 8px;
+bottom: 20px;
+color: white;
+cursor: pointer;
+display: none;
+outline: medium none;
+padding: 10px 15px 7px;
+position: fixed;
+right: 30px;
+z-index: 99;
+font-size: 20px;
+}
+</style>
+
+<!-- begin::Scrolltop -->
+<button onclick="scrollToTop()" id="scroll-btn" title="Go to top"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+
+
+<script>
+// When the user scrolls down 20px from the top of the document,we will show the button
+window.onscroll = function()
+{
+if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20)
+{
+document.getElementById("scroll-btn").style.display = "block";
+}
+else
+{
+document.getElementById("scroll-btn").style.display = "none";
+}
+};
+
+function scrollToTop()
+{
+document.body.scrollTop = 0; // For Safari
+document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+</script>
+
+{% include 'footer.html' %}
